@@ -5,11 +5,17 @@
                            [session :only [wrap-session]])
           [ayman-httpkit.middleware :only [wrap-request-logging-in-dev
                                            wrap-failsafe]])
-    (:require [compojure.route :as route]))
+    (:require [compojure.route :as route]
+              [org.httpkit.server :refer :all]))
+
+(defn asyncit [req]
+  (with-channel req chan
+    (send! chan "this works")))
 
 ;; define mapping here
 (defroutes server-routes*
   (GET "/" [] "hello world")
+  (GET "/load" req (asyncit req))
   ;; static files under ./public folder, prefix /static
   ;; like /static/css/style.css
   (route/files "/static")
