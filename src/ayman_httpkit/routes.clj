@@ -3,18 +3,13 @@
           (ring.middleware [keyword-params :only [wrap-keyword-params]]
                            [params :only [wrap-params]]
                            [session :only [wrap-session]])
-          [ayman-httpkit.middleware :only [wrap-failsafe wrap-request-logging-in-dev
-                                              wrap-reload-in-dev JGET JPUT JPOST JDELETE]])
-    (:require [ayman-httpkit.handlers.app :as app]
-              [ayman-httpkit.handlers.api :as api]
-              [compojure.route :as route]))
+          [ayman-httpkit.middleware :only [wrap-request-logging-in-dev
+                                           wrap-failsafe]])
+    (:require [compojure.route :as route]))
 
 ;; define mapping here
 (defroutes server-routes*
-  (GET "/" [] app/show-landing)
-  (context "/api" []
-           ;; JGET returns json encoding of the response
-           (JGET "/time" [] api/get-time))
+  (GET "/" [] "hello world")
   ;; static files under ./public folder, prefix /static
   ;; like /static/css/style.css
   (route/files "/static")
@@ -25,6 +20,4 @@
                  wrap-session
                  wrap-keyword-params
                  wrap-params
-                 wrap-request-logging-in-dev
-                 wrap-reload-in-dev
-                 wrap-failsafe))
+                 wrap-request-logging-in-dev))
