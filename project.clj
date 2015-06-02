@@ -7,7 +7,8 @@
   :aot [ayman-httpkit.main]
   :uberjar-name "ayman-httpkit-standalone.jar"
   ;; :plugins [[lein-swank "1.4.4"]]
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [org.clojure/tools.cli "0.2.2"]
                  [compojure "1.1.5"]
                  [ring/ring-core "1.1.8"]

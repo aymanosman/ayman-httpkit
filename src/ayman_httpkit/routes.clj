@@ -6,11 +6,14 @@
           [ayman-httpkit.middleware :only [wrap-request-logging-in-dev
                                            wrap-failsafe]])
     (:require [compojure.route :as route]
-              [org.httpkit.server :refer :all]))
+              [org.httpkit.server :refer :all]
+              [clojure.core.async :refer [go <! timeout]]))
 
 (defn asyncit [req]
   (with-channel req chan
-    (send! chan "this works")))
+    (go
+      (<! (timeout 3000))
+      (send! chan "this works"))))
 
 ;; define mapping here
 (defroutes server-routes*
